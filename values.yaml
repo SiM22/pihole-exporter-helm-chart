@@ -32,9 +32,9 @@ ingress:
   #      - chart-example.local
 
 extraEnvVars: {
-  INTERNAL: 10s,
-#  PIHOLE_HOSTNAME: service-name.namespace.svc.cluster.local, #InsertYourValueHere
-#  PIHOLE_PASSWORD: password, #InsertYourValueHere
+  INTERVAL: 10s,
+  PIHOLE_HOSTNAME: service-name.namespace.svc.cluster.local, #InsertYourValueHere
+  PIHOLE_PASSWORD: password, #InsertYourValueHere
 #  PORT: 8080 #ChangeDefaultWebserverPort
     }
 
