@@ -1,0 +1,11 @@
+apiVersion: v1
+name: pihole-exporter
+appVersion: "0.0.1"
+description: A Helm chart for Pihole Exporter to export metrics to Prometheus
+name: pihole-exporter
+sources:
+  - https://github.com/eko/pihole-exporter
+maintainers:
+  - name: Simon Garcia
+    email: deportivo2005@gmail.com
+version: 0.1.0
