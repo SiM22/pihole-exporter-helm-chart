@@ -29,6 +29,9 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
           {{- end }}
+          envFrom:
+            - secretRef:
+              name: {{ include "pihole-exporter.fullname" . }}
           ports:
           - name: httpexporter
             containerPort: {{ .Values.service.port }}

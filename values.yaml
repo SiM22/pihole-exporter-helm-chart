@@ -31,12 +31,14 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-extraEnvVars: {
+extraEnvVars:
   INTERVAL: 10s,
   PIHOLE_HOSTNAME: service-name.namespace.svc.cluster.local, #InsertYourValueHere
-  PIHOLE_PASSWORD: password, #InsertYourValueHere
 #  PORT: 8080 #ChangeDefaultWebserverPort
-    }
+
+# secretEnvVars:
+#   PIHOLE_PASSWORD: 
+#   PIHOLE_APITOKEN: 
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
