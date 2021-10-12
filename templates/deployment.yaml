@@ -29,9 +29,11 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
           {{- end }}
+          {{ if .Values.secretEnvVars }}
           envFrom:
             - secretRef:
                 name: {{ include "pihole-exporter.fullname" . }}
+          {{- end }}
           ports:
           - name: httpexporter
             containerPort: {{ .Values.service.port }}
