@@ -39,7 +39,7 @@ extraEnvVars:
 
 # secretEnvVars:
 #   PIHOLE_PASSWORD: 
-#   PIHOLE_APITOKEN: 
+#   PIHOLE_API_TOKEN: 
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
