@@ -4,6 +4,7 @@ metadata:
   name: {{ include "pihole-exporter.fullname" . }}
   labels:
 {{ include "pihole-exporter.labels" . | indent 4 }}
+  annoataions: {{ .Values.service.annotations }}
 spec:
   type: {{ .Values.service.type }}
   ports:
