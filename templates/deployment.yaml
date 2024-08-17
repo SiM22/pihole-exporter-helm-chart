@@ -34,10 +34,20 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
           {{- end }}
-          {{ if .Values.secretEnvVars }}
+          {{ with .Values.secret }}
+          {{- if .generate }}
+          # Use env values from generated secret
           envFrom:
             - secretRef:
-                name: {{ include "pihole-exporter.fullname" . }}
+                name: {{ include "pihole-exporter.fullname" $ }}
+          {{- else }}
+          # Use an existing secret
+          - name: {{ .existing.piHoleCredentialType }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .existing.secretName }}
+                key: {{ .existing.secretKey }}
+          {{- end }}
           {{- end }}
           ports:
           - name: httpexporter

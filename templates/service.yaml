@@ -10,7 +10,7 @@ spec:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.port }}
       protocol: TCP
-      name: exporter-port
+      name: {{ .Values.service.portName }}
   selector:
     app.kubernetes.io/name: {{ include "pihole-exporter.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
