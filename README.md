@@ -11,7 +11,7 @@ Using an auth token:
 helm install \
   -name pihole-exporter \
   --namespace pihole \
-  --set secretEnvVars.PIHOLE_APITOKEN=myPiHoleApiToken \
+  --set secret.secretEnvVars.PIHOLE_API_TOKEN=myPiHoleApiToken \
   ./
 ```
 
@@ -20,7 +20,17 @@ Using a password:
 helm install \
   -name pihole-exporter \
   --namespace pihole \
-  --set secretEnvVars.PIHOLE_PASSWORD=myPiHolePassword \
+  --set secret.secretEnvVars.PIHOLE_PASSWORD=myPiHolePassword \
+  ./
+```
+
+Using an existing secret in the same namespace:
+```
+helm install \
+  -name pihole-exporter \
+  --namespace pihole \
+  --set secret.generate=false \
+  --set secret.existing.secretName=my-pi-hole-secret \
   ./
 ```
 
@@ -38,16 +48,24 @@ helm install \
 
 This chart deploys the pihole-exporter by eko - https://github.com/eko/pihole-exporter to a kubernetes cluster.
 
-## Notes
-I have not set a default configuration, please modify the values.yaml file with your correct config settings.
-
 ## Configuration
 
-| Parameter                     | Description                           | Default |
-| :---------------------------- | :------------------------------------ | ------: |
-| service.port                  | Port for the kubernetes service       |    9617 |
-| extraEnvVars.INTERVAL         | How often to poll pihole stats        |     10s |
-| extraEnvVars.PIHOLE_HOSTNAME  | Pihole Hostname                       |    None |
-| secretEnvVars.PIHOLE_PASSWORD | Pihole admin user password            |    None |
-| secretEnvVars.PIHOLE_APITOKEN | Pihole api token                      |    None |
-| extraEnvVars.PORT             | Change default webserver port for app |    9617 |
+> The default configuration is very rudimentary, please override values as required for your configuration.
+
+To override the default you can either :
+* Set the individual values as required as part if the helm command (i.e. `--set some.value=MY_VALUE`)
+* Create your own `my-values.yaml` containing your custom values (i.e. `helm install -f my-values.yaml .`)
+* (Least preferred) Modify the `values.yaml` file with your configuration.
+
+| Parameter                            | Description                                                                                 |           Default |
+|:-------------------------------------|:--------------------------------------------------------------------------------------------|------------------:|
+| service.port                         | Port for the kubernetes service                                                             |              9617 |
+| extraEnvVars.INTERVAL                | How often to poll pihole stats                                                              |               10s |
+| extraEnvVars.PIHOLE_HOSTNAME         | Pihole Hostname                                                                             |              None |
+| extraEnvVars.PORT                    | Change default webserver port for app                                                       |              9617 |
+| secret.generate                      | Generate a new secret based on the `secretEnvVars` value/s                                  |              true |
+| secret.secretEnvVars.PIHOLE_PASSWORD | Pihole admin user password                                                                  |              None |
+| secret.secretEnvVars.PIHOLE_APITOKEN | Pihole api token                                                                            |              None |
+| secret.existing.secretName           | The name of an existing secret containing the Pihole credentials                            | my-pi-hole-secret |
+| secret.existing.piHoleCredentialType | The type of piHole credential in the secret, either 'PIHOLE_API_TOKEN' or 'PIHOLE_PASSWORD' |  PIHOLE_API_TOKEN |
+| secret.existing.secretKey            | The key within the secret containing the piHole api token or password                       |  PIHOLE_API_TOKEN |

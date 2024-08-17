@@ -37,9 +37,23 @@ extraEnvVars:
 #  PIHOLE_PORT: 8080 #Change the port the exporter tries to access your Pihole Service on
 #  PORT: 8080 #ChangeDefaultWebserverPort
 
-# secretEnvVars:
-#   PIHOLE_PASSWORD: 
-#   PIHOLE_API_TOKEN: 
+secret:
+  # false - generate a new secret using the value(s) from 'secretEnvVars'
+  # true - use an existing secret within the same namespace, see 'existing' below.
+  generate: true
+  # Used when generating a new secret from either the given pi-hole API token OR password
+  secretEnvVars:
+#   PIHOLE_API_TOKEN: <YOUR_PI_HOLE_API_TOKEN>
+#   PIHOLE_PASSWORD: <YOUR_PI_HOLE_PASSWORD>
+
+  # Details of an existing secret within the same namespace containing the pi-hole API token OR password
+  existing:
+    # The name of the existing secret
+    secretName: my-pi-hole-secret
+    # The type of piHole credential in the secret; use 'PIHOLE_API_TOKEN' or 'PIHOLE_PASSWORD'
+    piHoleCredentialType: PIHOLE_API_TOKEN
+    # The key within the secret containing the piHole api token or password
+    secretKey: PIHOLE_API_TOKEN
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
